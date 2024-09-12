@@ -20,18 +20,20 @@ public class Flashlight : MonoBehaviour
 
     void Update()
     {
-        if (off && Input.GetButtonDown("F"))
+        if (off && OVRInput.Get(OVRInput.Button.One))
         {
             flashlight.SetActive(true);
             //turnOn.Play();
+            //CheckStuffManager.INSTANCE.flashlightOn = true;
             off = false;
             on = true;
         }
-        else if (on && Input.GetButtonDown("F"))
+        else if (on && OVRInput.Get(OVRInput.Button.One))
         {
             flashlight.SetActive(false) ;
             //turnOff.Play();
-            off=true;
+            //CheckStuffManager.INSTANCE.flashlightOn = false;
+            off =true;
             on = false;
         }
     }
