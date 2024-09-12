@@ -7,6 +7,8 @@ public class CheckStuffManager : MonoBehaviour
     public static CheckStuffManager INSTANCE;
 
     public bool flashlightOn;
+    public int ghostsTouch;
+    public bool ghostIsTouching;
     public GameObject player;
     // Start is called before the first frame update
     private void Awake()

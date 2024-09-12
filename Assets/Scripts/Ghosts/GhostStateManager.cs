@@ -31,4 +31,14 @@ public class GhostStateManager : MonoBehaviour
         currentState = state;
         state.EnterState(this);
     }
+
+    public void OnCollisionEnter(Collision collision)
+    {
+        currentState.OnCollisionEnter(this, collision);
+    }
+
+    public void OnCollisionExit(Collision collision)
+    {
+        currentState.OnCollisionExit(this, collision);
+    }
 }

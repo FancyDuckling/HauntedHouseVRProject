@@ -15,7 +15,12 @@ public class GhostIdleState : GhostBaseState
         }
     }
 
-    public override void OnCollisionEnter(GhostStateManager ghost)
+    public override void OnCollisionEnter(GhostStateManager ghost, Collision collision)
+    {
+
+    }
+
+    public override void OnCollisionExit(GhostStateManager ghost, Collision collision)
     {
 
     }
