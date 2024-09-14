@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Flashlight : MonoBehaviour
 {
     public GameObject flashlight;
@@ -20,7 +21,7 @@ public class Flashlight : MonoBehaviour
 
     void Update()
     {
-        if (off && OVRInput.Get(OVRInput.Button.One))
+        if (off && Input.GetButtonDown("F") || OVRInput.GetDown(OVRInput.Button.Two))
         {
             flashlight.SetActive(true);
             //turnOn.Play();
@@ -28,7 +29,7 @@ public class Flashlight : MonoBehaviour
             off = false;
             on = true;
         }
-        else if (on && OVRInput.Get(OVRInput.Button.One))
+        else if (on && Input.GetButtonDown("F") || OVRInput.GetDown(OVRInput.Button.Two))
         {
             flashlight.SetActive(false) ;
             //turnOff.Play();
