@@ -17,11 +17,26 @@ public class GhostIdleState : GhostBaseState
 
     public override void OnCollisionEnter(GhostStateManager ghost, Collision collision)
     {
+        GameObject other = collision.gameObject;
+        if (other.CompareTag("Player"))
+        {
+            CheckStuffManager.INSTANCE.ghostsTouch++;
+            if (CheckStuffManager.INSTANCE.ghostsTouch > 0)
+            {
+                CheckStuffManager.INSTANCE.ghostIsTouching = true;
+            }
 
+        }
     }
 
     public override void OnCollisionExit(GhostStateManager ghost, Collision collision)
     {
-
+        GameObject other = collision.gameObject;
+        if (other.CompareTag("Player"))
+            CheckStuffManager.INSTANCE.ghostsTouch--;
+        if (CheckStuffManager.INSTANCE.ghostsTouch < 1)
+        {
+            CheckStuffManager.INSTANCE.ghostIsTouching = false;
+        }
     }
 }
