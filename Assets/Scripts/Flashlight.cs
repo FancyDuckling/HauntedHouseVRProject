@@ -25,7 +25,7 @@ public class Flashlight : MonoBehaviour
         {
             flashlight.SetActive(true);
             //turnOn.Play();
-            //CheckStuffManager.INSTANCE.flashlightOn = true;
+            CheckStuffManager.INSTANCE.flashlightOn = true;
             off = false;
             on = true;
         }
@@ -33,7 +33,7 @@ public class Flashlight : MonoBehaviour
         {
             flashlight.SetActive(false) ;
             //turnOff.Play();
-            //CheckStuffManager.INSTANCE.flashlightOn = false;
+            CheckStuffManager.INSTANCE.flashlightOn = false;
             off =true;
             on = false;
         }
