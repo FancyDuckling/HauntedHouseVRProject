@@ -56,6 +56,7 @@ public class Flashlight : MonoBehaviour
 
                         if (hit.transform == objectToCheck)
                         {
+                            flashlight.color = Color.red;
                             Debug.Log("Object is lit by the flashlight!");
                         }
                     }
