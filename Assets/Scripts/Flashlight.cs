@@ -8,30 +8,28 @@ public class Flashlight : MonoBehaviour
     public Light flashlight;              // The Light component of the flashlight
     public Transform objectToCheck;       // Assign the object you want to check
     public bool on;
-    public bool off;
     public Color rayColor = Color.green;  // Color for the visual ray
 
     void Start()
     {
-        off = true;
         flashlight.enabled = false;  // Initially turn off the light, but not the flashlightObject
     }
 
     void Update()
     {
         // Handle flashlight toggling
-        if (off && (Input.GetButtonDown("F") || OVRInput.GetDown(OVRInput.Button.Two)))
+        if (!on && (Input.GetButtonDown("F") || OVRInput.GetDown(OVRInput.Button.Two)))
         {
             flashlight.enabled = true;  // Turn on the light component
             CheckStuffManager.INSTANCE.flashlightOn = true;
-            off = false;
             on = true;
+            flashlight.color = new Color(0.925f, 0.796f, 0.537f);
         }
+
         else if (on && (Input.GetButtonDown("F") || OVRInput.GetDown(OVRInput.Button.Two)))
         {
             flashlight.enabled = false;  // Turn off the light component
             CheckStuffManager.INSTANCE.flashlightOn = false;
-            off = true;
             on = false;
         }
 
@@ -59,6 +57,8 @@ public class Flashlight : MonoBehaviour
                             flashlight.color = Color.red;
                             Debug.Log("Object is lit by the flashlight!");
                         }
+                        flashlight.color = new Color(0.925f, 0.796f, 0.537f);
+
                     }
                     else
                     {
