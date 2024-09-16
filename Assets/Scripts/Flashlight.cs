@@ -9,11 +9,12 @@ public class Flashlight : MonoBehaviour
     public Transform objectToCheck;       // Assign the object you want to check
     public bool on;
     public bool off;
+    public Color rayColor = Color.green;  // Color for the visual ray
 
     void Start()
     {
         off = true;
-        flashlightObject.SetActive(false);  // Disable the flashlight at start
+        flashlight.enabled = false;  // Initially turn off the light, but not the flashlightObject
     }
 
     void Update()
@@ -21,14 +22,14 @@ public class Flashlight : MonoBehaviour
         // Handle flashlight toggling
         if (off && (Input.GetButtonDown("F") || OVRInput.GetDown(OVRInput.Button.Two)))
         {
-            flashlightObject.SetActive(true);  // Turn on the flashlight
+            flashlight.enabled = true;  // Turn on the light component
             CheckStuffManager.INSTANCE.flashlightOn = true;
             off = false;
             on = true;
         }
         else if (on && (Input.GetButtonDown("F") || OVRInput.GetDown(OVRInput.Button.Two)))
         {
-            flashlightObject.SetActive(false);  // Turn off the flashlight
+            flashlight.enabled = false;  // Turn off the light component
             CheckStuffManager.INSTANCE.flashlightOn = false;
             off = true;
             on = false;
@@ -50,10 +51,18 @@ public class Flashlight : MonoBehaviour
                     // Raycast to see if there is a direct line of sight between the flashlight and the object
                     if (Physics.Raycast(flashlight.transform.position, directionToTarget, out RaycastHit hit, flashlight.range))
                     {
+                        // Visual ray for debugging
+                        Debug.DrawRay(flashlight.transform.position, directionToTarget, rayColor);
+
                         if (hit.transform == objectToCheck)
                         {
                             Debug.Log("Object is lit by the flashlight!");
                         }
+                    }
+                    else
+                    {
+                        // Draw the ray even if it doesn't hit the object (for debugging purposes)
+                        Debug.DrawRay(flashlight.transform.position, directionToTarget, Color.red);
                     }
                 }
             }
