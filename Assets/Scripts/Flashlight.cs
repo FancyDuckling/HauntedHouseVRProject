@@ -57,13 +57,13 @@ public class Flashlight : MonoBehaviour
                             flashlight.color = Color.red;
                             Debug.Log("Object is lit by the flashlight!");
                         }
-                        flashlight.color = new Color(0.925f, 0.796f, 0.537f);
-
                     }
                     else
                     {
                         // Draw the ray even if it doesn't hit the object (for debugging purposes)
                         Debug.DrawRay(flashlight.transform.position, directionToTarget, Color.red);
+
+                        flashlight.color = new Color(0.925f, 0.796f, 0.537f);
                     }
                 }
             }
