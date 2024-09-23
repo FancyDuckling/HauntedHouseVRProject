@@ -109,8 +109,25 @@ public class GrabbableCopy : MonoBehaviour
         m_grabbedCollider = grabPoint;
         gameObject.GetComponent<Rigidbody>().isKinematic = true;
 
-        //Added for Inventory
-         if(gameObject.GetComponent<Item>()==null) return;
+
+
+        //test inventory
+
+        // If the object is part of the inventory, handle detachment from the slot
+        if (gameObject.GetComponent<Item>() == null) return;
+        if (gameObject.GetComponent<Item>().inSlot)
+        {
+            // Clear the slot's reference to the item
+            gameObject.GetComponentInParent<Slot>().ItemInSlot = null;
+            gameObject.GetComponent<Item>().inSlot = false;
+
+            // Reset slot properties
+            gameObject.GetComponent<Item>().currentSlot.ResetColor();
+            gameObject.GetComponent<Item>().currentSlot = null;
+        }
+
+        /*//Added for Inventory
+        if (gameObject.GetComponent<Item>()==null) return;
          if (gameObject.GetComponent<Item>().inSlot)
          {
              gameObject.GetComponentInParent<Slot>().ItemInSlot = null;
@@ -119,13 +136,28 @@ public class GrabbableCopy : MonoBehaviour
              gameObject.GetComponent<Item>().currentSlot = null;
 
 
-         }
+         }*/
+    }
+
+    // Method called when the object is released
+    virtual public void GrabEnd(Vector3 linearVelocity, Vector3 angularVelocity)
+    {
+        if (m_grabbedBy)
+        {
+            Rigidbody rb = gameObject.GetComponent<Rigidbody>();
+            rb.isKinematic = false;
+            rb.velocity = linearVelocity;
+            rb.angularVelocity = angularVelocity;
+
+            m_grabbedBy = null;
+            m_grabbedCollider = null;
+        }
     }
 
     /// <summary>
     /// Notifies the object that it has been released.
     /// </summary>
-    virtual public void GrabEnd(Vector3 linearVelocity, Vector3 angularVelocity)
+    /*virtual public void GrabEnd(Vector3 linearVelocity, Vector3 angularVelocity)
     {
         Rigidbody rb = gameObject.GetComponent<Rigidbody>();
         rb.isKinematic = m_grabbedKinematic;
@@ -133,7 +165,7 @@ public class GrabbableCopy : MonoBehaviour
         rb.angularVelocity = angularVelocity;
         m_grabbedBy = null;
         m_grabbedCollider = null;
-    }
+    }*/
 
     void Awake()
     {
