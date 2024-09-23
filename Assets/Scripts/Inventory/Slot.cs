@@ -34,7 +34,7 @@ public class Slot : MonoBehaviour
 
     }
 
-    void InsertItem(GameObject obj)
+    public void InsertItem(GameObject obj)
     {
         obj.GetComponent<Rigidbody>().isKinematic = true;
         obj.transform.SetParent(gameObject.transform, true);
