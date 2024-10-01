@@ -44191,6 +44191,67 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 488160, guid: d9809c5e8418bb047bf2c8ba1d1a2cec, type: 3}
   m_PrefabInstance: {fileID: 553077649}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1778315309
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: c7c9c2b03b3ab7c4aaa28f8acfdc116f, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.2309
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c7c9c2b03b3ab7c4aaa28f8acfdc116f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 9.067
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c7c9c2b03b3ab7c4aaa28f8acfdc116f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.46
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c7c9c2b03b3ab7c4aaa28f8acfdc116f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -17.453
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c7c9c2b03b3ab7c4aaa28f8acfdc116f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c7c9c2b03b3ab7c4aaa28f8acfdc116f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c7c9c2b03b3ab7c4aaa28f8acfdc116f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c7c9c2b03b3ab7c4aaa28f8acfdc116f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c7c9c2b03b3ab7c4aaa28f8acfdc116f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c7c9c2b03b3ab7c4aaa28f8acfdc116f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c7c9c2b03b3ab7c4aaa28f8acfdc116f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: c7c9c2b03b3ab7c4aaa28f8acfdc116f, type: 3}
+      propertyPath: m_Name
+      value: HospitalBed (1)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c7c9c2b03b3ab7c4aaa28f8acfdc116f, type: 3}
 --- !u!43 &1822963741
 Mesh:
   m_ObjectHideFlags: 0
@@ -51945,3 +52006,4 @@ SceneRoots:
   - {fileID: 990150688}
   - {fileID: 1244957610}
   - {fileID: 1320858674}
+  - {fileID: 1778315309}
