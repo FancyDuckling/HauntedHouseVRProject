@@ -10,6 +10,8 @@ public class InventoryVR : MonoBehaviour
 
     public Slot[] slots; // Array of slots in the inventory
 
+
+
     private void Start()
     {
         Inventory.SetActive(false);

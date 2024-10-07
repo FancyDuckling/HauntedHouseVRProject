@@ -10,6 +10,8 @@ public class Flashlight : MonoBehaviour
     public bool on;
     public Color rayColor = Color.green;  // Color for the visual ray
 
+    public InventoryVR playerInventory;   // Reference to the player's inventory
+
     void Start()
     {
         flashlight.enabled = false;  // Initially turn off the light, but not the flashlightObject
@@ -25,7 +27,6 @@ public class Flashlight : MonoBehaviour
             on = true;
             flashlight.color = new Color(0.925f, 0.796f, 0.537f);
         }
-
         else if (on && (Input.GetButtonDown("F") || OVRInput.GetDown(OVRInput.Button.Two)))
         {
             flashlight.enabled = false;  // Turn off the light component
@@ -56,6 +57,9 @@ public class Flashlight : MonoBehaviour
                         {
                             flashlight.color = Color.red;
                             Debug.Log("Object is lit by the flashlight!");
+
+                            // Check if the object can be added to the inventory
+                            AddObjectToInventory(hit.transform.gameObject);
                         }
                         else
                             flashlight.color = new Color(0.925f, 0.796f, 0.537f);
@@ -64,10 +68,23 @@ public class Flashlight : MonoBehaviour
                     {
                         // Draw the ray even if it doesn't hit the object (for debugging purposes)
                         Debug.DrawRay(flashlight.transform.position, directionToTarget, Color.red);
-                        
                     }
                 }
             }
+        }
+    }
+
+    // Method to add the object to the player's inventory
+    private void AddObjectToInventory(GameObject obj)
+    {
+        if (playerInventory.AddItemToInventory(obj))
+        {
+            Debug.Log("Object added to inventory: " + obj.name);
+            obj.SetActive(false);  // Optionally deactivate or destroy the object after adding to inventory
+        }
+        else
+        {
+            Debug.Log("Failed to add object to inventory, inventory is full.");
         }
     }
 }
