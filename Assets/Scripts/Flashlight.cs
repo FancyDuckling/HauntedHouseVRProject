@@ -13,6 +13,7 @@ public class Flashlight : MonoBehaviour
     public List<Transform> objectsToCheck;    // List of objects to check
 
     public InventoryVR playerInventory;   // Reference to the player's inventory
+    
 
     void Start()
     {
@@ -72,6 +73,7 @@ public class Flashlight : MonoBehaviour
 
                         // Add the object to inventory
                         AddObjectToInventory(hit.transform.gameObject);
+
                     }
                     else
                         flashlight.color = new Color(0.925f, 0.796f, 0.537f);
@@ -91,7 +93,7 @@ public class Flashlight : MonoBehaviour
         if (playerInventory.AddItemToInventory(obj))
         {
             Debug.Log("Object added to inventory: " + obj.name);
-            obj.SetActive(false);  // Optionally deactivate or destroy the object after adding to inventory
+            
         }
         else
         {
