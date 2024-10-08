@@ -122,7 +122,7 @@ public class GrabbableCopy : MonoBehaviour
             gameObject.GetComponent<Item>().inSlot = false;
 
             // Reset slot properties
-            gameObject.GetComponent<Item>().currentSlot.ResetColor();
+            //gameObject.GetComponent<Item>().currentSlot.ResetColor();
             gameObject.GetComponent<Item>().currentSlot = null;
         }
 

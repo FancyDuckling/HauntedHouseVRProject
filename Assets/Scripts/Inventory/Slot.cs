@@ -43,12 +43,12 @@ public class Slot : MonoBehaviour
         obj.GetComponent<Item>().inSlot = true;
         obj.GetComponent<Item>().currentSlot = this;
         ItemInSlot = obj;
-        slotImage.color = Color.gray;
+       // slotImage.color = Color.gray;
 
     }
 
-    public void ResetColor()
+   /* public void ResetColor()
     {
         slotImage.color = originalColor;
-    }
+    }*/
 }
