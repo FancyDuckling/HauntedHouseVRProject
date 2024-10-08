@@ -4,13 +4,29 @@ using UnityEngine;
 using UnityEngine.UI;
 public class InventoryVR : MonoBehaviour
 {
+
+    public static InventoryVR Instance { get; private set; }
+
     public GameObject Inventory;
     public GameObject Anchor;
     bool UIActive;
 
     public Slot[] slots; // Array of slots in the inventory
 
-
+    private void Awake()
+    {
+        // Implement Singleton pattern
+        if (Instance == null)
+        {
+            Instance = this;
+            // Optional: Uncomment the next line if you want the inventory to persist across scenes
+            // DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     private void Start()
     {
