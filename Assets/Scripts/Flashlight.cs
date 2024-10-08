@@ -6,9 +6,11 @@ public class Flashlight : MonoBehaviour
 {
     public GameObject flashlightObject;   // The flashlight GameObject
     public Light flashlight;              // The Light component of the flashlight
-    public Transform objectToCheck;       // Assign the object you want to check
+    //public Transform objectToCheck;       // Assign the object you want to check
     public bool on;
     public Color rayColor = Color.green;  // Color for the visual ray
+
+    public List<Transform> objectsToCheck;    // List of objects to check
 
     public InventoryVR playerInventory;   // Reference to the player's inventory
 
@@ -34,41 +36,50 @@ public class Flashlight : MonoBehaviour
             on = false;
         }
 
-        // Check if the flashlight is on and check if the object is lit
+        // Check if the flashlight is on and check if any object is lit
         if (CheckStuffManager.INSTANCE.flashlightOn)
         {
-            Vector3 directionToTarget = objectToCheck.position - flashlight.transform.position;
-            float distanceToTarget = directionToTarget.magnitude;
-
-            // Check if the object is within the flashlight's range and cone angle
-            if (distanceToTarget <= flashlight.range)
+            foreach (Transform objectToCheck in objectsToCheck)
             {
-                // Check if the object is within the cone of light
-                float angleToTarget = Vector3.Angle(flashlight.transform.forward, directionToTarget);
-                if (angleToTarget <= flashlight.spotAngle / 2)
+                CheckObjectWithRaycast(objectToCheck);
+            }
+        }
+    }
+
+    // Method to check individual objects using raycasting
+    private void CheckObjectWithRaycast(Transform objectToCheck)
+    {
+        Vector3 directionToTarget = objectToCheck.position - flashlight.transform.position;
+        float distanceToTarget = directionToTarget.magnitude;
+
+        // Check if the object is within the flashlight's range and cone angle
+        if (distanceToTarget <= flashlight.range)
+        {
+            // Check if the object is within the cone of light
+            float angleToTarget = Vector3.Angle(flashlight.transform.forward, directionToTarget);
+            if (angleToTarget <= flashlight.spotAngle / 2)
+            {
+                // Raycast to see if there is a direct line of sight between the flashlight and the object
+                if (Physics.Raycast(flashlight.transform.position, directionToTarget, out RaycastHit hit, flashlight.range))
                 {
-                    // Raycast to see if there is a direct line of sight between the flashlight and the object
-                    if (Physics.Raycast(flashlight.transform.position, directionToTarget, out RaycastHit hit, flashlight.range))
+                    // Visual ray for debugging
+                    Debug.DrawRay(flashlight.transform.position, directionToTarget, rayColor);
+
+                    if (hit.transform == objectToCheck)
                     {
-                        // Visual ray for debugging
-                        Debug.DrawRay(flashlight.transform.position, directionToTarget, rayColor);
+                        flashlight.color = Color.red;
+                        Debug.Log("Object " + objectToCheck.name + " is lit by the flashlight!");
 
-                        if (hit.transform == objectToCheck)
-                        {
-                            flashlight.color = Color.red;
-                            Debug.Log("Object is lit by the flashlight!");
-
-                            // Check if the object can be added to the inventory
-                            AddObjectToInventory(hit.transform.gameObject);
-                        }
-                        else
-                            flashlight.color = new Color(0.925f, 0.796f, 0.537f);
+                        // Add the object to inventory
+                        AddObjectToInventory(hit.transform.gameObject);
                     }
                     else
-                    {
-                        // Draw the ray even if it doesn't hit the object (for debugging purposes)
-                        Debug.DrawRay(flashlight.transform.position, directionToTarget, Color.red);
-                    }
+                        flashlight.color = new Color(0.925f, 0.796f, 0.537f);
+                }
+                else
+                {
+                    // Draw the ray even if it doesn't hit the object (for debugging purposes)
+                    Debug.DrawRay(flashlight.transform.position, directionToTarget, Color.red);
                 }
             }
         }
