@@ -18,11 +18,11 @@ public class GhostRetreatingState : GhostBaseState
         }
         else
         {
-            // Calculate direction away from the player
-            Vector3 directionAway = (ghost.rb.transform.position - CheckStuffManager.INSTANCE.player.transform.position).normalized;
+            // Calculate direction towards the target
+            Vector3 directionToTarget = (ghost.startPosition - ghost.rb.transform.position).normalized;
 
             // Calculate the new position by moving away from the player
-            Vector3 newPosition = ghost.rb.transform.position + directionAway * retreatSpeed * Time.deltaTime;
+            Vector3 newPosition = ghost.rb.transform.position + directionToTarget * retreatSpeed * Time.deltaTime;
 
             // Apply the new position
             ghost.rb.transform.position = newPosition;

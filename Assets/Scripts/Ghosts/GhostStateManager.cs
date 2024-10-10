@@ -5,6 +5,7 @@ using UnityEngine;
 public class GhostStateManager : MonoBehaviour
 {
     GhostBaseState currentState;
+    public Vector3 startPosition;
     public GhostIdleState IdleState = new GhostIdleState();
     public GhostAttackingState AttackingState = new GhostAttackingState();
     public GhostRetreatingState RetreatingState = new GhostRetreatingState();
@@ -13,6 +14,7 @@ public class GhostStateManager : MonoBehaviour
 
     void Start()
     {
+        startPosition = transform.position;
         rb = GetComponent<Rigidbody>();
         //Starting State
         currentState = IdleState;
