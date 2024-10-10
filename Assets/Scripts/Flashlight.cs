@@ -16,7 +16,9 @@ public class Flashlight : MonoBehaviour
     public InventoryVR playerInventory;   // Reference to the player's inventory
 
     public TextMeshProUGUI turorialText;
-    
+
+    public float raycastMaxDistance = 1.5f;   // Maximum distance to check for keys
+
 
     void Start()
     {
@@ -56,30 +58,30 @@ public class Flashlight : MonoBehaviour
         Vector3 directionToTarget = objectToCheck.position - flashlight.transform.position;
         float distanceToTarget = directionToTarget.magnitude;
 
-        // Check if the object is within the flashlight's range and cone angle
-        if (distanceToTarget <= flashlight.range)
+        // Check if the object is within the specified raycast range (use a custom smaller distance)
+        if (distanceToTarget <= raycastMaxDistance)
         {
             // Check if the object is within the cone of light
             float angleToTarget = Vector3.Angle(flashlight.transform.forward, directionToTarget);
             if (angleToTarget <= flashlight.spotAngle / 2)
             {
                 // Raycast to see if there is a direct line of sight between the flashlight and the object
-                if (Physics.Raycast(flashlight.transform.position, directionToTarget, out RaycastHit hit, flashlight.range))
+                if (Physics.Raycast(flashlight.transform.position, directionToTarget, out RaycastHit hit, raycastMaxDistance))
                 {
                     // Visual ray for debugging
                     Debug.DrawRay(flashlight.transform.position, directionToTarget, rayColor);
 
                     if (hit.transform == objectToCheck)
                     {
-                        flashlight.color = Color.red;
                         Debug.Log("Object " + objectToCheck.name + " is lit by the flashlight!");
 
                         // Add the object to inventory
                         AddObjectToInventory(hit.transform.gameObject);
-
                     }
                     else
-                        flashlight.color = new Color(0.925f, 0.796f, 0.537f);
+                    {
+                        flashlight.color = new Color(0.925f, 0.796f, 0.537f);  // Reset flashlight color if no object is hit
+                    }
                 }
                 else
                 {
