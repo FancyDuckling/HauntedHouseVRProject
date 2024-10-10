@@ -49,12 +49,18 @@ public class CheckStuffManager : MonoBehaviour
             }
             else if (insanity == 5)
             {
+                
+            }
+            else if (insanity == 20)
+            {
                 // Enable the Game Over text
                 if (gameOverText != null)
                 {
-                    gameOverText.SetActive(true); 
+                    gameOverText.SetActive(true);
                 }
             }
+
+
         }
     }
 }
