@@ -1,4 +1,5 @@
 using UnityEngine;
+using TMPro;
 
 public class CheckStuffManager : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class CheckStuffManager : MonoBehaviour
     public GameObject player;
     public InsanityCanvas insanityCanvas;
 
+    public GameObject gameOverText;
     private void Awake()
     {
         if (INSTANCE != null)
@@ -47,7 +49,11 @@ public class CheckStuffManager : MonoBehaviour
             }
             else if (insanity == 5)
             {
-                // Custom logic for insanity == 5 if needed
+                // Enable the Game Over text
+                if (gameOverText != null)
+                {
+                    gameOverText.SetActive(true); 
+                }
             }
         }
     }
