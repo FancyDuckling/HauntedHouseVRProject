@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Doors : MonoBehaviour
 {
@@ -18,6 +19,8 @@ public class Doors : MonoBehaviour
     private Quaternion closedRotation;
     private Quaternion targetRotation;
 
+    public TextMeshProUGUI tutorialText;
+
     private void Start()
     {
         // Store the initial (closed) rotation of the door
@@ -34,10 +37,7 @@ public class Doors : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Call this method to attempt opening the door.
-    /// This should be linked to your interaction system (e.g., button press when near the door).
-    /// </summary>
+    
     public void AttemptOpenDoor()
     {
         if (isOpen)
@@ -52,15 +52,21 @@ public class Doors : MonoBehaviour
         }
         else
         {
+
+            tutorialText.text = "You don't have the required key to open this door.";
+            tutorialText.gameObject.SetActive(true);
+
+           
+            StartCoroutine(HideTutorialTextAfterDelay(3.0f));
+
             Debug.Log("You don't have the required key to open this door.");
-            // Optionally, add feedback like a sound or UI message here
+            
         }
     }
 
-    /// <summary>
-    /// Checks if the inventory contains the required key.
-    /// </summary>
-    /// <returns>True if the key is found; otherwise, false.</returns>
+   
+    // Checks if the inventory contains the required key.
+    
     private bool HasRequiredKey()
     {
         if (InventoryVR.Instance == null)
@@ -73,7 +79,7 @@ public class Doors : MonoBehaviour
         {
             if (slot.ItemInSlot != null)
             {
-                string keyName = slot.ItemInSlot.name; // Assumes the key's GameObject name matches requiredKeyName
+                string keyName = slot.ItemInSlot.name; 
                 if (keyName.Equals(requiredKeyName, System.StringComparison.OrdinalIgnoreCase))
                 {
                     return true;
@@ -84,20 +90,28 @@ public class Doors : MonoBehaviour
         return false;
     }
 
-    /// <summary>
-    /// Opens the door by rotating it to the open position.
-    /// </summary>
+    
+    // Opens the door by rotating it to the open position.
+    
     private void OpenDoor()
     {
         isOpen = true;
         targetRotation = closedRotation * Quaternion.Euler(0, openAngle, 0);
+
+        // Update the tutorialText to inform the player the door is opened
+        tutorialText.text = $"Door opened using key: {requiredKeyName}";
+        tutorialText.gameObject.SetActive(true);
+
+        // Optionally hide the tutorialText after a short delay
+        StartCoroutine(HideTutorialTextAfterDelay(3.0f));
+
         Debug.Log($"Door opened using key: {requiredKeyName}");
         
     }
 
-    /// <summary>
-    /// Optional: Closes the door if needed.
-    /// </summary>
+   
+    // Optional: Closes the door if needed.
+ 
     public void CloseDoor()
     {
         if (!isOpen)
@@ -109,7 +123,7 @@ public class Doors : MonoBehaviour
        
     }
 
-    // Example interaction using trigger and button press
+    //interaction using trigger and button press
     private void OnTriggerStay(Collider other)
     {
         // Check if the interacting object is the player
@@ -121,5 +135,12 @@ public class Doors : MonoBehaviour
                 AttemptOpenDoor();
             }
         }
+    }
+
+    // Coroutine to hide the tutorialText after a delay
+    private IEnumerator HideTutorialTextAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        tutorialText.gameObject.SetActive(false);
     }
 }

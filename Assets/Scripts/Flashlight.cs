@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Flashlight : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class Flashlight : MonoBehaviour
     public List<Transform> objectsToCheck;    // List of objects to check
 
     public InventoryVR playerInventory;   // Reference to the player's inventory
+
+    public TextMeshProUGUI turorialText;
     
 
     void Start()
@@ -92,12 +95,26 @@ public class Flashlight : MonoBehaviour
     {
         if (playerInventory.AddItemToInventory(obj))
         {
+            // Update tutorial text and enable it
+            turorialText.text = "Object added to inventory: " + obj.name;
+            turorialText.gameObject.SetActive(true);
+
             Debug.Log("Object added to inventory: " + obj.name);
-            
+
+            // Optionally, hide the text after a delay
+            StartCoroutine(HideTutorialTextAfterDelay(3.0f)); // Hide after 3 seconds
+
         }
         else
         {
             Debug.Log("Failed to add object to inventory, inventory is full.");
         }
+    }
+
+    // Coroutine to hide the tutorial text after a delay
+    private IEnumerator HideTutorialTextAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        turorialText.gameObject.SetActive(false);
     }
 }
