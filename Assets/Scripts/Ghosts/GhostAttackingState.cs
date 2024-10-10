@@ -1,8 +1,7 @@
 using UnityEngine;
 
 public class GhostAttackingState : GhostBaseState
-{
-    public float attackSpeed = 1.2f;
+{    
 
     public override void EnterState(GhostStateManager ghost)
     {
@@ -21,10 +20,15 @@ public class GhostAttackingState : GhostBaseState
             Vector3 directionToTarget = (CheckStuffManager.INSTANCE.player.transform.position - ghost.rb.transform.position).normalized;
 
             // Calculate the new position by moving towards the target
-            Vector3 newPosition = ghost.rb.transform.position + directionToTarget * attackSpeed * Time.deltaTime;
+            Vector3 newPosition = ghost.rb.transform.position + directionToTarget * ghost.attackSpeed * Time.deltaTime;
 
             // Apply the new position
             ghost.rb.transform.position = newPosition;
+        }
+        if (Vector3.Distance(ghost.transform.position, CheckStuffManager.INSTANCE.player.transform.position) < 3 && !ghost.hasBuued)
+        {
+            ghost.PlayRandomSound();
+            ghost.hasBuued = true;
         }
     }
 
@@ -33,11 +37,14 @@ public class GhostAttackingState : GhostBaseState
         GameObject other = collision.gameObject;
         if (other.CompareTag("Player"))
         {
-            CheckStuffManager.INSTANCE.ghostsTouch++;
+
+            CheckStuffManager.INSTANCE.insanity++;
             if (CheckStuffManager.INSTANCE.ghostsTouch > 0)
             {
                 CheckStuffManager.INSTANCE.ghostIsTouching = true;
             }
+            ghost.transform.position = ghost.startPosition;
+            ghost.hasBuued = false;
 
         }
     }

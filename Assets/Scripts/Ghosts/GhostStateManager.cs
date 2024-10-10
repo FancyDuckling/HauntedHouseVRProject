@@ -9,8 +9,16 @@ public class GhostStateManager : MonoBehaviour
     public GhostIdleState IdleState = new GhostIdleState();
     public GhostAttackingState AttackingState = new GhostAttackingState();
     public GhostRetreatingState RetreatingState = new GhostRetreatingState();
+    public bool hasBuued;
+    public float attackSpeed = 0.5f;
 
-    public Rigidbody rb; 
+    public Rigidbody rb;
+
+    // List to hold audio clips
+    public List<AudioClip> audioClips = new List<AudioClip>();
+
+    // Reference to AudioSource component
+    private AudioSource audioSource;
 
     void Start()
     {
@@ -18,6 +26,8 @@ public class GhostStateManager : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         //Starting State
         currentState = IdleState;
+        // Get the AudioSource component attached to the GameObject
+        audioSource = GetComponent<AudioSource>();
 
         currentState.EnterState(this);
     }
@@ -42,5 +52,24 @@ public class GhostStateManager : MonoBehaviour
     public void OnCollisionExit(Collision collision)
     {
         currentState.OnCollisionExit(this, collision);
+    }
+
+    public void PlayRandomSound()
+    {
+        if (audioClips.Count > 0) // Check if the list has any sounds
+        {
+            // Pick a random index from the audioClips list
+            int randomIndex = Random.Range(0, audioClips.Count);
+
+            // Set the selected audio clip to the audio source
+            audioSource.clip = audioClips[randomIndex];
+
+            // Play the audio clip
+            audioSource.Play();
+        }
+        else
+        {
+            Debug.LogWarning("No audio clips assigned!");
+        }
     }
 }
